@@ -504,6 +504,7 @@ function endGame() {
 
   const url = decodeURIComponent(window.location.href.split('tgShareScoreUrl=')[1]);
   var xhr = new XMLHttpRequest();
+  xhr.withCredentials = true;
   xhr.open("POST", url, true);
   xhr.setRequestHeader('Content-Type', 'application/json');
   xhr.send(JSON.stringify({
