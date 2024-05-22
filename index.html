@@ -504,7 +504,28 @@ function endGame() {
   // Show the restart button
   restartButton.style.display = 'block';
 
-  window.Telegram.WebView.postEvent('score', function () {console.log('event post')}, {score: 123});
+  window.Telegram.WebApp.ready();
+  const user = window.Telegram.WebApp.initDataUnsafe.user;
+  const payload = {
+        score: score,
+        user: user, // user information from Telegram
+        initData: Telegram.WebApp.initData
+    };
+
+    fetch('https://rzzuxqt0hi.execute-api.eu-central-1.amazonaws.com/Prod/api/telegram-webhook/test-game', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify(payload)
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Success:', data);
+    })
+    .catch(error => {
+        console.error('Error:', error);
+    });
 }
 
     function pauseGameForMarketplace() {
