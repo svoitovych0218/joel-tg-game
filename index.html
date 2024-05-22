@@ -504,18 +504,6 @@ function endGame() {
   restartButton.style.display = 'block';
 
   const tgShareScoreUrl = decodeURIComponent(window.location.href.split('tgShareScoreUrl=')[1]);
-  window.TelegramGameProxy.init({
-                    shareScoreUrl: tgShareScoreUrl,
-                    onClose: function() {
-                        console.log('Game closed');
-                    },
-                    onScore: function(data) {
-                        console.log('Score sent successfully:', data);
-                    },
-                    onScoreError: function(error) {
-                        console.error('Error sending score:', error);
-                    }
-                });
   window.TelegramGameProxy.shareScore(score);
 }
 
