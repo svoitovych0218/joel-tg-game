@@ -503,6 +503,7 @@ function endGame() {
   // Show the restart button
   restartButton.style.display = 'block';
 
+  const tgShareScoreUrl = decodeURIComponent(window.location.href.split('tgShareScoreUrl=')[1]);
   window.TelegramGameProxy.init({
                     shareScoreUrl: tgShareScoreUrl,
                     onClose: function() {
