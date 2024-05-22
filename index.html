@@ -513,12 +513,11 @@ function endGame() {
         initData: Telegram.WebApp.initData
     };
 
-    fetch('https://rzzuxqt0hi.execute-api.eu-central-1.amazonaws.com/Prod/api/telegram-webhook/test-game', {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json'
-        },
-        body: JSON.stringify(payload)
+    const a = new URLSearchParams(window.location.href)
+
+
+    fetch(`https://rzzuxqt0hi.execute-api.eu-central-1.amazonaws.com/Prod/api/telegram-webhook/test-score?userId=${a.get('userId')}&score=${score}&inMsgId=${a.get('inMsgId').split('#')[0]}`, {
+        method: 'POST'
     })
     .then(response => response.json())
     .then(data => {
