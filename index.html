@@ -85,6 +85,7 @@
   <button id="restartButton" style="display: none;">Restart</button>
 
   <script src="https://telegram.org/js/games.js"></script>
+  <script src="https://telegram.org/js/telegram-web-app.js"></script>
   <script>
     // Get the canvas element
     const canvas = document.getElementById('gameCanvas');
@@ -503,8 +504,7 @@ function endGame() {
   // Show the restart button
   restartButton.style.display = 'block';
 
-  const tgShareScoreUrl = decodeURIComponent(window.location.href.split('tgShareScoreUrl=')[1]);
-  window.TelegramGameProxy.shareScore(score);
+  window.Telegram.WebView.postEvent('score', function () {console.log('event post')}, {score: 123});
 }
 
     function pauseGameForMarketplace() {
