@@ -505,7 +505,7 @@ function endGame() {
   restartButton.style.display = 'block';
 
   window.Telegram.WebApp.ready();
-  window.Telegram.WebApp.sendData({score: score});
+  window.Telegram.WebApp.sendData(JSON.stringify({score: score}));
   const user = window.Telegram.WebApp.initDataUnsafe.user;
   const payload = {
         score: score,
