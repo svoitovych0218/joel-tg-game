@@ -84,6 +84,7 @@
   </div>
   <button id="restartButton" style="display: none;">Restart</button>
 
+  <script src="https://telegram.org/js/games.js"></script>
   <script>
     // Get the canvas element
     const canvas = document.getElementById('gameCanvas');
@@ -502,14 +503,19 @@ function endGame() {
   // Show the restart button
   restartButton.style.display = 'block';
 
-  const url = decodeURIComponent(window.location.href.split('tgShareScoreUrl=')[1]);
-  fetch(url, {
-    method: 'POST',
-    headers: {
-      'Content-Type': 'application/json;charset=utf-8'
-    },
-    body: JSON.stringify({score: score})
-  }).then(_=>console.log('finished'));
+  window.TelegramGameProxy.init({
+                    shareScoreUrl: tgShareScoreUrl,
+                    onClose: function() {
+                        console.log('Game closed');
+                    },
+                    onScore: function(data) {
+                        console.log('Score sent successfully:', data);
+                    },
+                    onScoreError: function(error) {
+                        console.error('Error sending score:', error);
+                    }
+                });
+  window.TelegramGameProxy.shareScore(score);
 }
 
     function pauseGameForMarketplace() {
