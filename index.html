@@ -441,6 +441,7 @@ function endGameSessionApi(score) {
 }
 
 function getLeaderboard() {
+  const a = new URLSearchParams(window.location.href);
   if (!a.get('userId')) return;
 
   return fetch(`${baseUrl}/telegram-game/leaderboard?userId=${a.get('userId')}`, {
