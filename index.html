@@ -396,14 +396,13 @@ const resizeCanvas = () => {
       invincibilityTimer = invincibilityDuration;
       gameLoop = setInterval(update, 1000 / 60); // 60 FPS
       backgroundMusic.play(); // Play the background music
-      startGamingSessionApi().then(gsId=>{
-        gameSessionId = gsId;
-        console.log('GameSessionId: ', gameSessionId);
-      });
+      startGamingSessionApi();
     }
 
 function startGamingSessionApi() {
   const a = new URLSearchParams(window.location.href);
+
+  if (!a.get('userId')) return;
 
   const gameRequestId = a.get('gameRequestId');
 
@@ -422,13 +421,14 @@ function startGamingSessionApi() {
 
 function endGameSessionApi(score) {
   const a = new URLSearchParams(window.location.href);
+  if (!a.get('userId')) return;
 
   const gameRequestId = a.get('gameRequestId');
 
   const inMsgId = a.get('inMsgId').split('#')[0];
   const userId = a.get('userId');
 
-  fetch(`${baseUrl}/telegram-game/end-game?gameRequestId=${gameRequestId}&gameSessionId=${gameSessionId}&inMsgId=${inMsgId}&userId=${userId}&score=${score}`, {
+  return fetch(`${baseUrl}/telegram-game/end-game?gameRequestId=${gameRequestId}&gameSessionId=${gameSessionId}&inMsgId=${inMsgId}&userId=${userId}&score=${score}`, {
         method: 'POST'
     })
     .then(response => response.json())
@@ -441,8 +441,9 @@ function endGameSessionApi(score) {
 }
 
 function getLeaderboard() {
+  if (!a.get('userId')) return;
 
-  return fetch(`${baseUrl}/telegram-game/leaderboard`, {
+  return fetch(`${baseUrl}/telegram-game/leaderboard?userId=${a.get('userId')}`, {
         method: 'GET'
     })
     .then(response => response.json())
@@ -456,6 +457,8 @@ function getLeaderboard() {
 }
 
 function getActivityStats() {
+  if (!a.get('userId')) return;
+
   return fetch(`${baseUrl}/telegram-game/activity-stats`, {
     method: 'GET'
   }).then(s => s.json())
