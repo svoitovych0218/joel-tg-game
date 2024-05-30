@@ -881,7 +881,7 @@ function endGame() {
     const leaderboard = await getLeaderboard();
 
     console.log(leaderboard);
-  })
+  })().then(_=>console.log('Requests sent'));
   
   fetchLeaderboard();
   const a = new URLSearchParams(window.location.href)
