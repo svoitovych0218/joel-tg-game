@@ -882,7 +882,6 @@ function endGame() {
     await endGameSessionApi(score);
 
     const leaderboard = await getLeaderboard();
-
     console.log(leaderboard);
   })().then(_=>console.log('Requests sent'));
   
